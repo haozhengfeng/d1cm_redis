@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.d1cm.redis.member.mapper.MemberMapper">
+
+	
+
+	<select id="checkMember" resultType="com.d1cm.redis.member.model.Member" >
+		SELECT 
+			im.m_ID,m_Email,m_Mobile,m_UserName,m_PassWord,m_true_pass,reg_source,reg_ip,reg_time,IsState,IsCompanyAdmin,
+			CompanyID,boundComState,IsMobileActived,IsShowData,IsExpert,last_login_time,last_login_ip,login_count,
+			mb_name,mb_sex,	mb_birth,mb_address,mb_headphoto
+		FROM D1CM_MemberData.dbo.IndividualMembers im left join D1CM_MemberData.dbo.member_ext me on im.m_ID = me.m_id
+		where
+			(m_UserName=#{arg0}) and (m_PassWord=#{arg1}) and (IsState=1)
+	</select>
+
+	<select id="checkMemberByOpenid" resultType="com.d1cm.redis.member.model.Member" parameterType="string">
+		SELECT im.* FROM D1CM_MemberData.dbo.IndividualMembers im left join
+		D1CM_MemberData.dbo.member_auths ma on im.m_id = ma.m_id where
+		identifier=#{openid} and IsState=1
+	</select>
+	
+	<select id="getMember" resultType="com.d1cm.redis.member.model.Member" parameterType="string">
+		SELECT 
+			im.m_ID,m_Email,m_Mobile,m_UserName,m_PassWord,m_true_pass,reg_source,reg_ip,reg_time,IsState,IsCompanyAdmin,
+			CompanyID,boundComState,IsMobileActived,IsShowData,IsExpert,last_login_time,last_login_ip,login_count,
+			mb_name,mb_sex,	mb_birth,mb_address,mb_headphoto
+		FROM D1CM_MemberData.dbo.IndividualMembers im left join D1CM_MemberData.dbo.member_ext me on im.m_ID = me.m_id
+		where 
+			im.m_ID=#{m_ID}
+	</select>
+	
+	<!-- <resultMap type="HashMap" id="ResultMap">
+		<id column="m_ID" property="m_ID" javaType="String"/>
+		<id column="m_Email" property="m_Email" javaType="String"/>
+		<id column="m_Mobile" property="m_Mobile" javaType="String"/>
+		<id column="m_UserName" property="m_UserName" javaType="String"/>
+		<id column="m_PassWord" property="m_PassWord" javaType="String"/>
+		<id column="m_true_pass" property="m_true_pass" javaType="String"/>
+		<id column="reg_source" property="reg_source" javaType="String"/>
+		<id column="reg_ip" property="reg_ip" javaType="String"/>
+		<id column="reg_time" property="reg_time" javaType="String"/>
+		<id column="IsState" property="IsState" javaType="String"/>
+		<id column="IsCompanyAdmin" property="IsCompanyAdmin" javaType="String"/>
+		<id column="CompanyID" property="CompanyID" javaType="String"/>
+		<id column="boundComState" property="boundComState" javaType="String"/>
+		<id column="IsMobileActived" property="IsMobileActived" javaType="String"/>
+		<id column="IsShowData" property="IsShowData" javaType="String"/>
+		<id column="IsExpert" property="IsExpert" javaType="String"/>
+		<id column="last_login_time" property="last_login_time" javaType="String"/>
+		<id column="last_login_ip" property="last_login_ip" javaType="String"/>
+		<id column="login_count" property="login_count" javaType="String"/>
+	</resultMap> -->
+
+</mapper>

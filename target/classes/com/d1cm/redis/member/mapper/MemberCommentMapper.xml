@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.d1cm.redis.member.mapper.MemberCommentMapper">
+
+	<select id="getMemberCommentByArticle" resultType="com.d1cm.redis.member.model.MemberComment"  parameterType="string">
+		SELECT id,m_id,article_id,author_id,cmt_uhead,cmt_time,cmt_content,floor_index,like_state,like_count,save_state 
+		FROM D1CM_APP.DBO.COMMENT WHERE article_id=#{articleid}
+	</select>
+	
+	<select id="getMemberCommentByMember" resultType="com.d1cm.redis.member.model.MemberComment"  parameterType="string">
+		SELECT id,m_id,article_id,author_id,cmt_uhead,cmt_time,cmt_content,floor_index,like_state,like_count,save_state 
+		FROM D1CM_APP.DBO.COMMENT WHERE author_id=#{mid}
+	</select>
+
+</mapper>
